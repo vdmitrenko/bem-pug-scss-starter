@@ -1,0 +1,88 @@
+$gutters: (xl: 30px, lg: 30px, md: 24px, sm: 16px, xs: 16px)
+
+$grid-breakpoints: (xl: 1280px, lg: 1024px, md: 768px, sm: 480px, xs: 0px)
+
+$container-max-width: 1520px
+
+.container
+  max-width: $container-max-width
+  width: 100%
+  margin-left: auto
+  margin-right: auto
+
+.row
+  display: flex
+  align-items: flex-start
+  flex-wrap: wrap
+
+.stretch
+  align-items: stretch
+
+.align-items-center
+  align-items: center
+
+.align-items-start
+  align-items: flex-start
+
+.align-items-end
+  align-items: flex-end
+
+.justify-content-center
+  justify-content: center
+
+.justify-content-start
+  justify-content: flex-start
+
+.justify-content-end
+  justify-content: flex-end
+
+@for $i from 1 through 12
+  .order-#{$i}
+    order: $i
+
+  $width: 100% * $i / 12
+
+  .col-#{$i}
+    position: relative
+    box-sizing: border-box
+    flex: 0 0 $width
+    max-width: $width
+    width: 100%
+  
+@each $breakpoint-name, $breakpoint-value in $grid-breakpoints
+  @media only screen and (min-width: #{$breakpoint-value})
+
+    $gutter: map-get($gutters, $breakpoint-name)
+
+    .row
+      margin-left: ($gutter / -2)
+      margin-right: ($gutter / -2)
+
+    .offset-#{$breakpoint-name}-0
+      margin-left: 0
+
+    [class*='col-']
+      padding-left: ($gutter / 2)
+      padding-right: ($gutter / 2)
+
+    .row.no-gutters
+
+      [class*='col-']
+        padding-left: 0
+        padding-right: 0
+
+    @for $i from 1 through 12
+      $width: 100% * $i / 12
+
+      .col-#{$breakpoint-name}-#{$i}
+        position: relative
+        box-sizing: border-box
+        flex: 0 0 $width
+        max-width: $width
+        width: 100%
+
+      .offset-#{$breakpoint-name}-#{$i}
+        margin-left: $width
+      
+      .order-#{$breakpoint-name}-#{$i}
+        order: $i
